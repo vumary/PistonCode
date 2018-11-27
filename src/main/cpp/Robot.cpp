@@ -11,7 +11,8 @@
 #include <SmartDashboard/SmartDashboard.h>
 
 ExampleSubsystem Robot::m_subsystem;
-OI Robot::m_oi;
+DriveTrain* Robot::m_drive;
+OI* Robot::m_oi;
 
 void Robot::RobotInit() {
   m_chooser.AddDefault("Default Auto", &m_defaultAuto);
@@ -34,7 +35,10 @@ void Robot::RobotPeriodic() {}
  * can use it to reset any subsystem information you want to clear when the
  * robot is disabled.
  */
-void Robot::DisabledInit() {}
+void Robot::DisabledInit() {
+  m_drive = new DriveTrain();
+  m_oi - new OI();
+}
 
 void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 

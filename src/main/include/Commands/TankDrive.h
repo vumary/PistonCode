@@ -5,18 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "OI.h"
+#pragma once
 
-#include <WPILib.h>
+#include <Commands/Command.h>
 
-OI::OI() : leftJoy(new Joystick(0)), rightJoy(new Joystick(1)){
-  // Process operator interface input here.
-}
-
-Joystick* OI::getLeft(){
-  return leftJoy;
-}
-
-Joystick* OI::getRight(){
-  return rightJoy;
-}
+class TankDrive : public frc::Command {
+ public:
+  TankDrive();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
+};
