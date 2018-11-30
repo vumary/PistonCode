@@ -6,7 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 #include "Robot.h"
-
 #include <Commands/Scheduler.h>
 #include <SmartDashboard/SmartDashboard.h>
 
@@ -37,7 +36,7 @@ void Robot::RobotPeriodic() {}
  */
 void Robot::DisabledInit() {
   m_drive = new DriveTrain();
-  m_oi - new OI();
+  m_oi = new OI();
 }
 
 void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
