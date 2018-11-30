@@ -6,8 +6,14 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
+#include "WPILib.h"
 
 class OI {
- public:
+  private:
+    Joystick* leftJoy;
+    Joystick* rightJoy; 
+  public:
+  Joystick* getLeft();
+  Joystick* getRight();
   OI();
 };

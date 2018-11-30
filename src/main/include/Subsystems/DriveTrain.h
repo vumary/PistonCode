@@ -5,18 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "OI.h"
+#pragma once
 
-#include <WPILib.h>
+#include <Commands/Subsystem.h>
+#include "ctre/Phoenix.h"
 
-OI::OI() : leftJoy(new Joystick(0)), rightJoy(new Joystick(1)){
-  // Process operator interface input here.
-}
+class DriveTrain : public frc::Subsystem {
+ private:
+ TalonSRX* left;
+ TalonSRX* right;
+   // It's desirable that everything possible under private except
+  // for methods that implement subsystem capabilities
 
-Joystick* OI::getLeft(){
-  return leftJoy;
-}
-
-Joystick* OI::getRight(){
-  return rightJoy;
-}
+ public:
+  DriveTrain();
+  void tankDrive(double leftPow, double rightPow);
+  void InitDefaultCommand() override;
+};
