@@ -7,24 +7,25 @@
 
 #pragma once
 
-#include <Commands/Subsystem.h>
-#include "ctre/Phoenix.h"
-#include "WPILib.h"
-
-class DriveTrain : public frc::Subsystem {
+#include "WVPIDController.h"
+#include "OI.h"
+#include "Subsystems/DriveTrain.h"
+#include "../Robot.h"
+class AutoMoveForward : public frc::Command {
  private:
- TalonSRX* left;
- TalonSRX* right;
- ADXRS450_Gyro* gyro;
-   // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
+ double target;
+ double distKp = 0.1;
+ double distKi = 0;
+ double distKd = 0;
+ double power = 0;
+
+ WVPIDController * drivingPID;
 
  public:
-  DriveTrain();
-  void tankDrive(double leftPow, double rightPow);
-  void InitDefaultCommand() override;
-  void resetEncoders();
-  void gyroReset();
-  double getLeftDistance();
-  double getRightDistance();
+  AutoMoveForward(double setpoint);
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
 };

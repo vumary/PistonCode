@@ -7,24 +7,25 @@
 
 #pragma once
 
-#include <Commands/Subsystem.h>
-#include "ctre/Phoenix.h"
-#include "WPILib.h"
-
-class DriveTrain : public frc::Subsystem {
+#include "WVPIDController.h"
+#include "OI.h"
+#include "Subsystems/DriveTrain.h"
+#include "../Robot.h"
+class AutoTurn : public frc::Command {
  private:
- TalonSRX* left;
- TalonSRX* right;
- ADXRS450_Gyro* gyro;
-   // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
-
+double setpoint;
+double error;
+double angleKp = 0.03;
+double angleKi = 0;
+double angleKd = 0;
+double power = 0;
+double angle = 0;
+WVPIDController * anglePID;
  public:
-  DriveTrain();
-  void tankDrive(double leftPow, double rightPow);
-  void InitDefaultCommand() override;
-  void resetEncoders();
-  void gyroReset();
-  double getLeftDistance();
-  double getRightDistance();
+  AutoTurn(double angleInput);
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
 };
