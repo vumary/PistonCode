@@ -14,6 +14,7 @@ class DriveTrain : public frc::Subsystem {
  private:
  TalonSRX* left;
  TalonSRX* right;
+ ADXRS450_Gyro* gyro;
    // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
 
@@ -22,6 +23,7 @@ class DriveTrain : public frc::Subsystem {
   void tankDrive(double leftPow, double rightPow);
   void InitDefaultCommand() override;
   void resetEncoders();
+  void gyroReset();
   double getLeftDistance();
   double getRightDistance();
 };

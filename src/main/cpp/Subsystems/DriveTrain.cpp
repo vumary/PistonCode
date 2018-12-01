@@ -9,9 +9,14 @@
 #include "Commands/TankDrive.h"
 #include "RobotMap.h"
 
-DriveTrain::DriveTrain() : Subsystem("DriveTrain"), left(new TalonSRX(2)), right(new TalonSRX(3)) {
+DriveTrain::DriveTrain() : Subsystem("DriveTrain"), left(new TalonSRX(2)), right(new TalonSRX(3)), gyro(new ADXRS450_Gyro(1)) {
 left->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative,0,10);
+left->SetSelectedSensorPosition(0,0,10);
 right->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative,0,10);
+right->SetSelectedSensorPosition(0,0,10);
+gyro->Reset();
+gyro->Calibrate();
+
 }
 void DriveTrain::InitDefaultCommand() {
   // Set the default command for a subsystem here.
@@ -19,7 +24,9 @@ void DriveTrain::InitDefaultCommand() {
 
   SetDefaultCommand(new TankDrive());
 }
-
+void DriveTrain::gyroReset() {
+	gyro->Calibrate();
+}
 void DriveTrain::tankDrive(double leftPow, double rightPow){
   left->Set(ControlMode::PercentOutput, leftPow);
   right->Set(ControlMode::PercentOutput, rightPow);
