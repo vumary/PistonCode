@@ -10,9 +10,9 @@
 #include "RobotMap.h"
 
 DriveTrain::DriveTrain() : Subsystem("DriveTrain"), left(new TalonSRX(2)), right(new TalonSRX(3)) {
-
+left->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative,0,10);
+right->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative,0,10);
 }
-
 void DriveTrain::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
@@ -24,6 +24,17 @@ void DriveTrain::tankDrive(double leftPow, double rightPow){
   left->Set(ControlMode::PercentOutput, leftPow);
   right->Set(ControlMode::PercentOutput, rightPow);
 }
-
+void DriveTrain::resetEncoders() {
+  left->SetSelectedSensorPosition(0,0,10);
+  right->SetSelectedSensorPosition(0,0,10);
+}
+double DriveTrain::getLeftDistance() {
+  double relativePosition = left->GetSensorCollection().GetQuadraturePosition();
+  return relativePosition;
+}
+double DriveTrain::getRightDistance() {
+  double relativePosition = -(right->GetSensorCollection().GetQuadraturePosition());
+  return relativePosition;
+} 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

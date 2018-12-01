@@ -21,4 +21,7 @@ class DriveTrain : public frc::Subsystem {
   DriveTrain();
   void tankDrive(double leftPow, double rightPow);
   void InitDefaultCommand() override;
+  void resetEncoders();
+  double getLeftDistance();
+  double getRightDistance();
 };
