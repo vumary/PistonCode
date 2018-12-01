@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "AutoTurn.h"
+#include "Commands/AutoTurn.h"
 
 AutoTurn::AutoTurn(double angleInput):
 anglePID(new WVPIDController(angleKp, angleKi, angleKd, setpoint, false)) {
@@ -22,15 +22,15 @@ void AutoTurn::Initialize() {
 Robot::m_drive->resetEncoders();
 Robot::m_drive->gyroReset();
 anglePID->SetSetPoint(setpoint);
-SetTimeout(2);
+}
 // Called repeatedly when this Command is scheduled to run
 void AutoTurn::Execute() {
 power = anglePID->Tick((Robot::m_drive->getLeftDistance() + Robot::m_drive->getRightDistance())/2);
 if (setpoint > 0) {
-		drive->tankDrive(0.15 + power, -0.15 - power);
+		Robot::m_drive->tankDrive(0.15 + power, -0.15 - power);
 	}
 	else {
-		drive->tankDrive(-0.15 - power, 0.15 + power);
+		Robot::m_drive->tankDrive(-0.15 - power, 0.15 + power);
 	}
 }
 // Make this return true when this Command no longer needs to run execute()
@@ -38,7 +38,7 @@ bool AutoTurn::IsFinished() {
 if (fabs(anglePID->GetError()) < 0.05) {
   return true;
 }
-else return IsTimedOut();
+else return false;
 }
 
 // Called once after isFinished returns true

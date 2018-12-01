@@ -9,6 +9,7 @@
 
 #include <Commands/Subsystem.h>
 #include "ctre/Phoenix.h"
+#include "WPILib.h"
 
 class DriveTrain : public frc::Subsystem {
  private:

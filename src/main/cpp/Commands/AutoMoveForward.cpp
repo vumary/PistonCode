@@ -19,7 +19,7 @@ drivingPID(new WVPIDController(distKp, distKi, distKd, target, false)) {
 void AutoMoveForward::Initialize() {
 Robot::m_drive->resetEncoders();
 drivingPID->SetSetPoint(target);
-SetTimeout(5);
+
 }
 // Called repeatedly when this Command is scheduled to run
 void AutoMoveForward::Execute() {
@@ -31,7 +31,7 @@ bool AutoMoveForward::IsFinished() {
 if (fabs(drivingPID->GetError()) < 0.05) {
   return true;
 }
-else return IsTimedOut();
+else return false;
 }
 // Called once after isFinished returns true
 void AutoMoveForward::End() {
