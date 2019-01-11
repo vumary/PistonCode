@@ -16,6 +16,7 @@ class DriveTrain : public frc::Subsystem {
  TalonSRX* left;
  TalonSRX* right;
  ADXRS450_Gyro* gyro;
+ Compressor* c;
    // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
 
@@ -25,6 +26,8 @@ class DriveTrain : public frc::Subsystem {
   void InitDefaultCommand() override;
   void resetEncoders();
   void gyroReset();
+  void moveCompressor();
   double getLeftDistance();
   double getRightDistance();
+  
 };

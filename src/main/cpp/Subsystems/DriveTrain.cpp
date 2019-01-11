@@ -9,7 +9,11 @@
 #include "Commands/TankDrive.h"
 #include "RobotMap.h"
 
-DriveTrain::DriveTrain() : Subsystem("DriveTrain"), left(new TalonSRX(2)), right(new TalonSRX(3)), gyro(new ADXRS450_Gyro())
+DriveTrain::DriveTrain() : Subsystem("DriveTrain"), 
+left(new TalonSRX(2)), 
+right(new TalonSRX(3)), 
+gyro(new ADXRS450_Gyro()), 
+c(new Compressor(0))//change num later
  {
 left->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative,0,10);
 left->SetSelectedSensorPosition(0,0,10);
@@ -42,5 +46,9 @@ double DriveTrain::getRightDistance() {
   double relativePosition = -(right->GetSensorCollection().GetQuadraturePosition());
   return relativePosition;
 } 
+
+void DriveTrain::moveCompressor(){
+  c->SetClosedLoopControl(!c->getPressureSwitchValue());
+}
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
